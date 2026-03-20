@@ -1,0 +1,97 @@
+{
+  "dataset": "musk2",
+  "n_splits": 10,
+  "seed": 42,
+
+  "_comment": "MUSK2: n=6598, d=166, 2 classes (musk/non-musk molecules). Moderate-high dimensionality with known complex non-linear structure — molecules have many conformations and SVC-RBF struggles relative to its performance on simpler datasets. A good intermediate test between ionosphere (d=34) and GISETTE (d=5000).",
+
+  "models": {
+
+    "ML-SVM": {
+      "class": "mlsvm",
+      "params": {
+        "n_layers":     2,
+        "n_components": 1000
+      }
+    },
+
+    "DKN-AGOP": {
+      "class": "dkn_agop",
+      "params": {
+        "n_layers":   2,
+        "D":          500,
+        "rank":       50,
+        "C":          1.0,
+        "agop_steps": 1
+      },
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "C":        [0.1, 1.0, 10.0],
+        "rank":     [20, 50, 100, 150],
+        "D":        [500, 1000]
+      },
+      "tuning": {
+        "inner_splits": 5,
+        "strategy":     "random",
+        "n_iter":       40
+      }
+    },
+
+    "DKN-Align": {
+      "class": "dkn_align",
+      "params": {
+        "n_layers":   2,
+        "d_k":        200,
+        "D":          500,
+        "C":          1.0,
+        "lr":         0.001,
+        "epochs":     300,
+        "batch_size": 512
+      },
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "C":        [0.1, 1.0, 10.0],
+        "lr":       [0.0001, 0.001],
+        "D":        [500, 1000]
+      },
+      "tuning": {
+        "inner_splits": 5,
+        "strategy":     "random",
+        "n_iter":       30
+      }
+    },
+
+    "SVC-RBF": {
+      "class": "svc",
+      "params": {
+        "C":     1.0,
+        "gamma": "scale"
+      },
+      "param_grid": {
+        "C": [0.1, 1.0, 10.0, 100.0]
+      },
+      "tuning": {
+        "inner_splits": 5,
+        "strategy":     "grid"
+      }
+    },
+
+    "MLP": {
+      "class": "mlp",
+      "params": {
+        "hidden_layer_sizes": [256, 256],
+        "alpha":    0.0001,
+        "max_iter": 500
+      }
+    },
+
+    "XGBoost": {
+      "class": "xgboost",
+      "params": {
+        "n_estimators":  500,
+        "learning_rate": 0.05
+      }
+    }
+
+  }
+}

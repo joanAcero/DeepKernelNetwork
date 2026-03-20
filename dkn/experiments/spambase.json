@@ -1,0 +1,70 @@
+{
+  "dataset": "spambase",
+  "n_splits": 10,
+  "seed": 42,
+
+  "_notes": {
+    "n": 4601, "d": 57, "classes": 2,
+    "history": "rank=20 selected in all 10 folds — the inner CV was hitting the lower bound of the previous grid [20,50,100]. Grid now extended down to [5,10,20,30] to find the true optimum. DKN-Align lr=0.001 dominant. DKN-AGOP still below SVC-RBF even after tuning — this is the hardest dataset for our models.",
+    "time_budget": "moderate n — n_iter=20 gives good coverage without excess runtime"
+  },
+
+  "models": {
+
+    "ML-SVM": {
+      "class": "mlsvm",
+      "params": { "n_layers": 2, "n_components": 1000 }
+    },
+
+    "DKN-AGOP": {
+      "class": "dkn_agop",
+      "params": {
+        "n_layers": 2, "D": 500, "rank": 20,
+        "C": 1.0, "agop_steps": 1
+      },
+      "_comment_rank": "rank=20 was the lower bound of the previous grid and won every fold. Extended down to 5 — the true optimum may be even sparser.",
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "rank":     [5, 10, 20, 30],
+        "C":        [0.1, 1.0, 10.0],
+        "D":        [500, 1000]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 20 }
+    },
+
+    "DKN-Align": {
+      "class": "dkn_align",
+      "params": {
+        "n_layers": 2, "d_k": 200, "D": 500,
+        "C": 1.0, "lr": 0.001, "epochs": 300, "batch_size": 512
+      },
+      "_comment_lr": "lr=0.001 selected in all 10 folds previously — kept fixed, only n_layers, C, D explored.",
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "C":        [0.1, 1.0, 10.0],
+        "D":        [500, 1000]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 20 }
+    },
+
+    "SVC-RBF": {
+      "class": "svc",
+      "params": { "C": 1.0, "gamma": "scale" },
+      "param_grid": { "C": [0.1, 1.0, 10.0, 100.0] },
+      "tuning": { "inner_splits": 5, "strategy": "grid" }
+    },
+
+    "MLP": {
+      "class": "mlp",
+      "params": {
+        "hidden_layer_sizes": [256, 256], "alpha": 0.0001, "max_iter": 500
+      }
+    },
+
+    "XGBoost": {
+      "class": "xgboost",
+      "params": { "n_estimators": 500, "learning_rate": 0.05 }
+    }
+
+  }
+}

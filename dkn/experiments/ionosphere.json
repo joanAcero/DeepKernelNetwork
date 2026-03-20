@@ -1,0 +1,99 @@
+{
+  "dataset": "ionosphere",
+  "n_splits": 10,
+  "seed": 42,
+
+  "_notes": {
+    "n": 351, "d": 34, "classes": 2,
+    "history": {
+      "DKN-AGOP":      "D=1000 (8/10) fixed. rank=150 was upper bound → extended to 200. C split 1.0/10.0 → still in grid. n_layers=2 dominant but still in grid.",
+      "DKN-Align":     "lr=0.0001 (7/10) fixed. n_layers, C, D still uncertain → kept in grid.",
+      "SVC-RBF":       "C=10.0 (8/10) fixed. Grid removed entirely.",
+      "DKN-RFM-Align": "New model — full grid. rank capped at 34 (=d). agop_steps tunes AGOP convergence. lr=0.0001 seeded from DKN-Align history."
+    }
+  },
+
+  "models": {
+
+    "ML-SVM": {
+      "class": "mlsvm",
+      "params": { "n_layers": 2, "n_components": 1000 }
+    },
+
+    "DKN-AGOP": {
+      "class": "dkn_agop",
+      "params": {
+        "n_layers":   2,
+        "D":          1000,
+        "rank":       150,
+        "C":          1.0,
+        "agop_steps": 1
+      },
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "rank":     [100, 150, 200],
+        "C":        [0.1, 1.0, 10.0]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 10 }
+    },
+
+    "DKN-Align": {
+      "class": "dkn_align",
+      "params": {
+        "n_layers":   2,
+        "d_k":        200,
+        "D":          500,
+        "C":          1.0,
+        "lr":         0.0001,
+        "epochs":     300,
+        "batch_size": 512
+      },
+      "param_grid": {
+        "n_layers": [1, 2, 3, 4],
+        "C":        [0.1, 1.0, 10.0],
+        "D":        [500, 1000]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 10 }
+    },
+
+    "DKN-RFM-Align": {
+      "class": "dkn_rfm_align",
+      "params": {
+        "n_layers":   2,
+        "D":          500,
+        "rank":       20,
+        "C":          1.0,
+        "agop_steps": 5,
+        "lr":         0.0001,
+        "epochs":     300,
+        "batch_size": 64
+      },
+      "param_grid": {
+        "n_layers":   [1, 2, 3],
+        "rank":       [10, 20, 34],
+        "C":          [0.1, 1.0, 10.0],
+        "agop_steps": [3, 5, 7],
+        "D":          [500, 1000]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 25 }
+    },
+
+    "SVC-RBF": {
+      "class": "svc",
+      "params": { "C": 10.0, "gamma": "scale" }
+    },
+
+    "MLP": {
+      "class": "mlp",
+      "params": {
+        "hidden_layer_sizes": [256, 256], "alpha": 0.0001, "max_iter": 500
+      }
+    },
+
+    "XGBoost": {
+      "class": "xgboost",
+      "params": { "n_estimators": 500, "learning_rate": 0.05 }
+    }
+
+  }
+}
