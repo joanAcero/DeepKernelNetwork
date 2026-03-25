@@ -5,8 +5,14 @@
 
   "_notes": {
     "n": 4601, "d": 57, "classes": 2,
-    "history": "rank=20 selected in all 10 folds — the inner CV was hitting the lower bound of the previous grid [20,50,100]. Grid now extended down to [5,10,20,30] to find the true optimum. DKN-Align lr=0.001 dominant. DKN-AGOP still below SVC-RBF even after tuning — this is the hardest dataset for our models.",
-    "time_budget": "moderate n — n_iter=20 gives good coverage without excess runtime"
+    "status": "DEFINITIVE — all hyperparameters fixed from 4 rounds of tuning. No grids.",
+    "provenance": {
+      "DKN-AGOP":      "rank=50 confirmed over 4 runs. C=1.0 (10/10). n_layers=1 (8/10). D=1000 (7/10). agop_steps=1.",
+      "DKN-Align":     "lr=0.001 (10/10). n_layers=2 (6/10). D=500 (6/10). C=1.0 (plurality).",
+      "DKN-RFM-Align": "rank=57=d (7/10), agop_steps=5 (10/10), D=500 (10/10), C=1.0 (10/10), n_layers=3 (6/10). Structurally ineffective — full-rank selection indicates no low-rank discriminative geometry.",
+      "SVC-RBF":       "C=10.0 (8/10).",
+      "conclusion":    "XGBoost and MLP dominate. DKN-Align competitive (3rd). DKN-AGOP and DKN-RFM-Align fail structurally on this dataset."
+    }
   },
 
   "models": {
@@ -19,39 +25,44 @@
     "DKN-AGOP": {
       "class": "dkn_agop",
       "params": {
-        "n_layers": 2, "D": 500, "rank": 20,
-        "C": 1.0, "agop_steps": 1
-      },
-      "_comment_rank": "rank=20 was the lower bound of the previous grid and won every fold. Extended down to 5 — the true optimum may be even sparser.",
-      "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "rank":     [5, 10, 20, 30],
-        "C":        [0.1, 1.0, 10.0],
-        "D":        [500, 1000]
-      },
-      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 20 }
+        "n_layers":   1,
+        "D":          1000,
+        "rank":       50,
+        "C":          1.0,
+        "agop_steps": 1
+      }
     },
 
     "DKN-Align": {
       "class": "dkn_align",
       "params": {
-        "n_layers": 2, "d_k": 200, "D": 500,
-        "C": 1.0, "lr": 0.001, "epochs": 300, "batch_size": 512
-      },
-      "_comment_lr": "lr=0.001 selected in all 10 folds previously — kept fixed, only n_layers, C, D explored.",
-      "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "C":        [0.1, 1.0, 10.0],
-        "D":        [500, 1000]
-      },
-      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 20 }
+        "n_layers":   2,
+        "d_k":        200,
+        "D":          500,
+        "C":          1.0,
+        "lr":         0.001,
+        "epochs":     300,
+        "batch_size": 512
+      }
+    },
+
+    "DKN-RFM-Align": {
+      "class": "dkn_rfm_align",
+      "params": {
+        "n_layers":   3,
+        "D":          500,
+        "rank":       57,
+        "C":          1.0,
+        "agop_steps": 5,
+        "lr":         0.0001,
+        "epochs":     300,
+        "batch_size": 256
+      }
     },
 
     "SVC-RBF": {
       "class": "svc",
-      "params": { "C": 1.0, "gamma": "scale" },
-      "param_grid": { "C": [0.1, 1.0, 10.0, 100.0] },
-      "tuning": { "inner_splits": 5, "strategy": "grid" }
+      "params": { "C": 10.0, "gamma": "scale" }
     },
 
     "MLP": {

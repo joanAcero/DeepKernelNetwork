@@ -3,38 +3,42 @@
   "n_splits": 10,
   "seed": 42,
 
-  "_comment": "MUSK2: n=6598, d=166, 2 classes (musk/non-musk molecules). Moderate-high dimensionality with known complex non-linear structure — molecules have many conformations and SVC-RBF struggles relative to its performance on simpler datasets. A good intermediate test between ionosphere (d=34) and GISETTE (d=5000).",
+  "_notes": {
+    "n": 6598, "d": 166, "classes": 2,
+    "history": {
+      "note":          "First run on musk2. n=6598 and d=166 make this the most important dataset for DKN-RFM-Align: large enough for a stable AGOP estimate, high enough dimensionality for meaningful rank truncation.",
+      "DKN-AGOP":      "First run. d=166 → rank grid [20,50,100,150]. sigest_frac=0.5 to keep cost tractable at n=6598.",
+      "DKN-Align":     "First run. lr grid [0.0001,0.001] — both values explored.",
+      "DKN-RFM-Align": "First and most important run. rank capped at 166 (=d). agop_steps [3,5,7] — key new hyperparameter.",
+      "SVC-RBF":       "First run — tune C.",
+      "time_estimate": "~90-120 min."
+    }
+  },
 
   "models": {
 
     "ML-SVM": {
       "class": "mlsvm",
-      "params": {
-        "n_layers":     2,
-        "n_components": 1000
-      }
+      "params": { "n_layers": 2, "n_components": 1000 }
     },
 
     "DKN-AGOP": {
       "class": "dkn_agop",
       "params": {
-        "n_layers":   2,
-        "D":          500,
-        "rank":       50,
-        "C":          1.0,
-        "agop_steps": 1
+        "n_layers":    2,
+        "D":           500,
+        "rank":        50,
+        "C":           1.0,
+        "agop_steps":  1,
+        "sigest_frac": 0.5
       },
       "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "C":        [0.1, 1.0, 10.0],
+        "n_layers": [1, 2, 3],
         "rank":     [20, 50, 100, 150],
+        "C":        [0.1, 1.0, 10.0],
         "D":        [500, 1000]
       },
-      "tuning": {
-        "inner_splits": 5,
-        "strategy":     "random",
-        "n_iter":       40
-      }
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 30 }
     },
 
     "DKN-Align": {
@@ -49,48 +53,53 @@
         "batch_size": 512
       },
       "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "C":        [0.1, 1.0, 10.0],
+        "n_layers": [1, 2, 3],
+        "D":        [500, 1000],
         "lr":       [0.0001, 0.001],
-        "D":        [500, 1000]
+        "C":        [1.0, 10.0]
       },
-      "tuning": {
-        "inner_splits": 5,
-        "strategy":     "random",
-        "n_iter":       30
-      }
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 25 }
+    },
+
+    "DKN-RFM-Align": {
+      "class": "dkn_rfm_align",
+      "params": {
+        "n_layers":   2,
+        "D":          500,
+        "rank":       50,
+        "C":          1.0,
+        "agop_steps": 5,
+        "lr":         0.0001,
+        "epochs":     300,
+        "batch_size": 256
+      },
+      "param_grid": {
+        "n_layers":   [1, 2, 3],
+        "rank":       [20, 50, 100, 166],
+        "agop_steps": [3, 5, 7],
+        "D":          [500, 1000],
+        "C":          [1.0, 10.0]
+      },
+      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 30 }
     },
 
     "SVC-RBF": {
       "class": "svc",
-      "params": {
-        "C":     1.0,
-        "gamma": "scale"
-      },
-      "param_grid": {
-        "C": [0.1, 1.0, 10.0, 100.0]
-      },
-      "tuning": {
-        "inner_splits": 5,
-        "strategy":     "grid"
-      }
+      "params": { "C": 1.0, "gamma": "scale" },
+      "param_grid": { "C": [0.1, 1.0, 10.0, 100.0] },
+      "tuning": { "inner_splits": 5, "strategy": "grid" }
     },
 
     "MLP": {
       "class": "mlp",
       "params": {
-        "hidden_layer_sizes": [256, 256],
-        "alpha":    0.0001,
-        "max_iter": 500
+        "hidden_layer_sizes": [256, 256], "alpha": 0.0001, "max_iter": 500
       }
     },
 
     "XGBoost": {
       "class": "xgboost",
-      "params": {
-        "n_estimators":  500,
-        "learning_rate": 0.05
-      }
+      "params": { "n_estimators": 500, "learning_rate": 0.05 }
     }
 
   }

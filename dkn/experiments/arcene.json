@@ -1,0 +1,62 @@
+{
+  "dataset": "arcene",
+  "n_splits": 10,
+  "seed": 42,
+
+  "_notes": {
+    "n": 900, "d": 10000, "classes": 2,
+    "status": "DKN-AGOP and DKN-RFM-Align excluded based on GISETTE result — both fail structurally when d >> rank_of_signal. At d=10000 they would be even worse.",
+    "scientific_question": "Can DKN-Align beat SVC-RBF on an extreme p>>n problem (n=900, d=10000)?",
+    "DKN-Align":  "inner_splits=3. batch_size=64. Random n_iter=20. ~30-50 min.",
+    "SVC-RBF":    "Tune C, inner_splits=3.",
+    "time_estimate": "~30-60 min total."
+  },
+
+  "models": {
+
+    "ML-SVM": {
+      "class": "mlsvm",
+      "params": { "n_layers": 2, "n_components": 1000 }
+    },
+
+    "DKN-Align": {
+      "class": "dkn_align",
+      "params": {
+        "n_layers":   2,
+        "d_k":        200,
+        "D":          500,
+        "C":          1.0,
+        "lr":         0.001,
+        "epochs":     300,
+        "batch_size": 64
+      },
+      "param_grid": {
+        "n_layers": [1, 2, 3],
+        "D":        [500, 1000],
+        "lr":       [0.0001, 0.001],
+        "C":        [1.0, 10.0]
+      },
+      "tuning": { "inner_splits": 3, "strategy": "random", "n_iter": 20 }
+    },
+
+    "SVC-RBF": {
+      "class": "svc",
+      "params": { "C": 1.0, "gamma": "scale" },
+      "param_grid": { "C": [0.1, 1.0, 10.0, 100.0] },
+      "tuning": { "inner_splits": 3, "strategy": "grid" }
+    },
+
+    "MLP": {
+      "class": "mlp",
+      "params": {
+        "hidden_layer_sizes": [256, 256], "alpha": 0.0001, "max_iter": 500
+      }
+    },
+
+    "XGBoost": {
+      "class": "xgboost",
+      "params": { "n_estimators": 500, "learning_rate": 0.05 }
+    }
+
+  }
+}

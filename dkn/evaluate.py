@@ -232,9 +232,14 @@ def _inner_cv(
             y_itr, y_ival = y_tr[inner_tr_idx], y_tr[inner_val_idx]
 
             # Scale inside the inner fold to prevent leakage
-            inner_scaler = StandardScaler().fit(X_itr)
+            import scipy.sparse as sp
+            _with_mean_inner = not sp.issparse(X_itr)
+            inner_scaler = StandardScaler(with_mean=_with_mean_inner).fit(X_itr)
             X_itr  = inner_scaler.transform(X_itr)
             X_ival = inner_scaler.transform(X_ival)
+            if sp.issparse(X_itr):
+                X_itr  = X_itr.toarray()
+                X_ival = X_ival.toarray()
 
             model = _instantiate(class_key, params)
             model.fit(X_itr, y_itr)
@@ -385,9 +390,17 @@ def benchmark(
         y_tr, y_te = y[train_idx], y[test_idx]
 
         # Scale on the outer training fold only
-        scaler = StandardScaler().fit(X_tr)
+        # with_mean=False supports sparse matrices (e.g. GISETTE);
+        # has no effect on dense arrays.
+        import scipy.sparse as sp
+        _with_mean = not sp.issparse(X_tr)
+        scaler = StandardScaler(with_mean=_with_mean).fit(X_tr)
         X_tr   = scaler.transform(X_tr)
         X_te   = scaler.transform(X_te)
+        # Convert sparse to dense after scaling — all models expect dense input
+        if sp.issparse(X_tr):
+            X_tr = X_tr.toarray()
+            X_te = X_te.toarray()
 
         for name, spec in model_specs.items():
             class_key   = spec["class"]

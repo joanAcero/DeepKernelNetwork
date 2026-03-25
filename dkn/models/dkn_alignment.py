@@ -250,12 +250,8 @@ class DKN_Alignment(BaseModel):
                 loss.backward()
                 opt.step()
 
-                if (epoch + 1) % 100 == 0:
-                    print(
-                        f"  Layer {k+1}/{self.n_layers} | "
-                        f"epoch {epoch+1}/{self.epochs} | "
-                        f"alignment = {-loss.item():.4f}"
-                    )
+                # Progress printing removed — output is controlled
+                # at the benchmark level via evaluate.py's ETA tracker.
 
             # Freeze and propagate
             block.eval()

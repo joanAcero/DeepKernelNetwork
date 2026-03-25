@@ -254,16 +254,51 @@ def load_musk2() -> tuple[np.ndarray, np.ndarray]:
     methods — a useful intermediate between ionosphere (d=34) and
     GISETTE (d=5 000).
 
-    Labels are originally {0, 1} — already 0-based, remapping is a no-op
-    but applied uniformly for consistency.
+    Fetched by OpenML data_id=1116 (unambiguous; avoids version mismatch).
+    The raw dataset contains molecule/conformation ID columns (strings)
+    which are dropped — only numeric feature columns are retained.
+    Labels are originally {0, 1} — already 0-based.
+    """
+    import pandas as pd
+    from sklearn.datasets import fetch_openml
+    ds = fetch_openml(data_id=1116, as_frame=True, parser="auto")
+    df = ds.data
+    # Drop any columns that cannot be cast to float (e.g. molecule ID strings)
+    numeric_cols = [c for c in df.columns if pd.to_numeric(df[c], errors="coerce").notna().all()]
+    X = df[numeric_cols].to_numpy(dtype=np.float64)
+    try:
+        y_raw = ds.target.astype(int).to_numpy()
+    except (ValueError, TypeError):
+        y_raw = np.array([int(v) for v in ds.target])
+    unique = np.unique(y_raw)
+    label_map = {v: i for i, v in enumerate(unique)}
+    y = np.array([label_map[yi] for yi in y_raw])
+    return X, y
+
+
+def load_arcene() -> tuple[np.ndarray, np.ndarray]:
+    """
+    ARCENE — NIPS 2003 Feature Selection Challenge (OpenML data_id=1458).
+
+    n=900 (combined train + validation sets), d=10 000, 2 classes.
+    Mass spectrometry data for cancer detection.  Only ~7% of features
+    are relevant; the remainder are noise probes inserted deliberately.
+    This extreme sparsity of the signal makes it a canonical benchmark
+    for high-dimensional feature selection and representation learning.
+
+    Labels are originally {-1, 1} — remapped to {0, 1}.
+
+    Note: n=900 is small relative to d=10 000 (p >> n regime).
+    Use inner_splits=3 in tuning configs to preserve adequate inner
+    training set sizes.
     """
     from sklearn.datasets import fetch_openml
-    ds = fetch_openml(name="musk", version=2, as_frame=False, parser="auto")
+    ds = fetch_openml(data_id=1458, as_frame=False, parser="auto")
     X  = ds.data.astype(np.float64)
     try:
         y_raw = ds.target.astype(int)
     except (ValueError, TypeError):
-        y_raw = np.array([int(v) for v in ds.target])
+        y_raw = np.array([int(float(v)) for v in ds.target])
     unique = np.unique(y_raw)
     label_map = {v: i for i, v in enumerate(unique)}
     y = np.array([label_map[yi] for yi in y_raw])
@@ -287,6 +322,7 @@ LOADERS: dict[str, callable] = {
     "madelon":        load_madelon,
     "gisette":        load_gisette,
     "musk2":          load_musk2,
+    "arcene":         load_arcene,
 }
 
 

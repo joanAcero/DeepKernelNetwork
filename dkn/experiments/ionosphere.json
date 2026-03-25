@@ -6,10 +6,11 @@
   "_notes": {
     "n": 351, "d": 34, "classes": 2,
     "history": {
-      "DKN-AGOP":      "D=1000 (8/10) fixed. rank=150 was upper bound → extended to 200. C split 1.0/10.0 → still in grid. n_layers=2 dominant but still in grid.",
-      "DKN-Align":     "lr=0.0001 (7/10) fixed. n_layers, C, D still uncertain → kept in grid.",
-      "SVC-RBF":       "C=10.0 (8/10) fixed. Grid removed entirely.",
-      "DKN-RFM-Align": "New model — full grid. rank capped at 34 (=d). agop_steps tunes AGOP convergence. lr=0.0001 seeded from DKN-Align history."
+      "DKN-AGOP":      "D=1000, C=1.0 fixed. rank=200 dominant (5/10), rank=300 only 1/10 → [150,200,250]. n_layers=2 dominant (7/10) → [2,3].",
+      "DKN-Align":     "lr=0.0001, C=1.0 fixed. n_layers spread → [2,3,4]. D split 6/4 → [500,1000]. Grid 3x2=6 candidates.",
+      "DKN-RFM-Align": "D=1000, rank=34, agop_steps=3, lr=0.0001, C=1.0 all fixed. n_layers only open question → [1,2,3]. Grid 3 candidates.",
+      "SVC-RBF":       "C=10.0 fixed.",
+      "note":          "Final ionosphere run — dataset near-saturated at n=351."
     }
   },
 
@@ -25,22 +26,21 @@
       "params": {
         "n_layers":   2,
         "D":          1000,
-        "rank":       150,
+        "rank":       200,
         "C":          1.0,
         "agop_steps": 1
       },
       "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "rank":     [100, 150, 200],
-        "C":        [0.1, 1.0, 10.0]
+        "n_layers": [2, 3],
+        "rank":     [150, 200, 250]
       },
-      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 10 }
+      "tuning": { "inner_splits": 5, "strategy": "grid" }
     },
 
     "DKN-Align": {
       "class": "dkn_align",
       "params": {
-        "n_layers":   2,
+        "n_layers":   3,
         "d_k":        200,
         "D":          500,
         "C":          1.0,
@@ -49,33 +49,28 @@
         "batch_size": 512
       },
       "param_grid": {
-        "n_layers": [1, 2, 3, 4],
-        "C":        [0.1, 1.0, 10.0],
+        "n_layers": [2, 3, 4],
         "D":        [500, 1000]
       },
-      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 10 }
+      "tuning": { "inner_splits": 5, "strategy": "grid" }
     },
 
     "DKN-RFM-Align": {
       "class": "dkn_rfm_align",
       "params": {
         "n_layers":   2,
-        "D":          500,
-        "rank":       20,
+        "D":          1000,
+        "rank":       34,
         "C":          1.0,
-        "agop_steps": 5,
+        "agop_steps": 3,
         "lr":         0.0001,
         "epochs":     300,
         "batch_size": 64
       },
       "param_grid": {
-        "n_layers":   [1, 2, 3],
-        "rank":       [10, 20, 34],
-        "C":          [0.1, 1.0, 10.0],
-        "agop_steps": [3, 5, 7],
-        "D":          [500, 1000]
+        "n_layers": [1, 2, 3]
       },
-      "tuning": { "inner_splits": 5, "strategy": "random", "n_iter": 25 }
+      "tuning": { "inner_splits": 5, "strategy": "grid" }
     },
 
     "SVC-RBF": {
