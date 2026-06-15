@@ -42,6 +42,7 @@ from sklearn.preprocessing import StandardScaler
 
 sys.path.insert(0, str(Path(__file__).parent))
 from utils import Tee, CSVWriter, load, hms, banner
+from small_datasets import load_small
 from mlsvm_extensions import DiverseMLMSVM
 
 EXP_ID    = "exp_feeding_strategies"
@@ -77,6 +78,10 @@ N_GRID = {
     "HIGGS":     [1_000, 5_000, 10_000, 50_000, 100_000, 200_000],
     "CoverType": [1_000, 5_000, 10_000, 50_000, 100_000, 200_000],
     "MNIST":     [1_000, 5_000, 10_000, 50_000],
+    # --- small UCI datasets (<=~6k): sweep small-n, last point uses full pool ---
+    "Optdigits": [500, 1_000, 2_000, 3_823],   # canonical train size 3,823
+    "Satimage":  [500, 1_000, 2_000, 4_435],   # canonical train size 4,435
+    "Digits8x8": [500, 1_000, 1_400],          # sklearn 8x8 digits (offline-safe)
 }
 
 
@@ -95,7 +100,10 @@ def make_model(m, L, mode, full_data, seed):
 def run_cell(X, y, name, n_total, csv_w):
     d, K = X.shape[1], len(np.unique(y))
     pool = len(y)
-    test_size = min(TEST_SIZE, max(2000, pool // 5))
+    # test split: 20% of pool, capped at TEST_SIZE (large data) and floored at 500
+    # (small data). For large pools this is exactly TEST_SIZE, unchanged from the
+    # big-dataset runs, preserving commensurability; for small pools it scales down.
+    test_size = min(TEST_SIZE, max(500, pool // 5))
     n_eff = min(n_total, pool - test_size)
     if n_eff < 500:
         return
@@ -161,9 +169,11 @@ def run(log_path, csv_path, datasets):
                "Reuse A (baseline) and B_phi (featpart) from prior runs for the full table.")
         t0 = time.perf_counter()
         loaded = {}
+        SMALL = {"optdigits", "satimage", "digits8x8"}
         for tag, nm in datasets:
             try:
-                X, y = load(tag); loaded[nm] = (X, y)
+                X, y = (load_small(tag) if tag in SMALL else load(tag))
+                loaded[nm] = (X, y)
                 print(f"  loaded {nm}: {len(y):,} rows, d={X.shape[1]}, K={len(np.unique(y))}")
             except Exception as e:
                 print(f"  [{nm}] LOAD FAILED: {e}")
@@ -185,11 +195,15 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser()
     p.add_argument("--log_dir", default="logs")
     p.add_argument("--csv_dir", default="results")
-    p.add_argument("--only", choices=["higgs","covertype","mnist"])
+    p.add_argument("--only", choices=["higgs","covertype","mnist",
+                                      "optdigits","satimage","digits8x8"])
     a = p.parse_args()
-    ds = [("higgs","HIGGS"),("covertype","CoverType"),("mnist","MNIST")]
+    ds = [("higgs","HIGGS"),("covertype","CoverType"),("mnist","MNIST"),
+          ("optdigits","Optdigits"),("satimage","Satimage")]
+    NAME = {"higgs":"HIGGS","covertype":"CoverType","mnist":"MNIST",
+            "optdigits":"Optdigits","satimage":"Satimage","digits8x8":"Digits8x8"}
     if a.only:
-        ds = [(a.only, {"higgs":"HIGGS","covertype":"CoverType","mnist":"MNIST"}[a.only])]
+        ds = [(a.only, NAME[a.only])]
     ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     run(os.path.join(a.log_dir, f"exp_feeding_strategies_{ts}.txt"),
         os.path.join(a.csv_dir, "exp_feeding_strategies.csv"), ds)
