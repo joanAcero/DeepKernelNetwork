@@ -1,0 +1,36 @@
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{llcclll}
+\toprule
+Dataset & $n$ & $m{=}1$ & best $m{>}1$ & $m$ & arm & gain \\
+\midrule
+CoverType & 1000 & 0.6653 & 0.6919\,$\pm$\,0.0058 & 50 & B (cols d/m) & +0.0265$^\dagger$ \\
+CoverType & 5000 & 0.7407 & 0.7618\,$\pm$\,0.0066 & 50 & B (cols √d) & +0.0212$^\dagger$ \\
+CoverType & 10000 & 0.7683 & 0.8007\,$\pm$\,0.0045 & 50 & B (cols √d) & +0.0324$^\dagger$ \\
+CoverType & 50000 & 0.7955 & 0.7946\,$\pm$\,0.0030 & 10 & C (split data) & -0.0009 \\
+Digits8x8 & 500 & 0.9727 & 0.9720\,$\pm$\,0.0080 & 50 & B (cols √d) & -0.0007 \\
+Digits8x8 & 1000 & 0.9793 & 0.9807\,$\pm$\,0.0031 & 50 & B (cols √d) & +0.0013 \\
+Digits8x8 & 1297 & 0.9807 & 0.9820\,$\pm$\,0.0040 & 50 & B (cols √d) & +0.0013 \\
+HIGGS & 1000 & 0.5738 & 0.6204\,$\pm$\,0.0071 & 50 & B (cols √d) & +0.0465$^\dagger$ \\
+HIGGS & 5000 & 0.6154 & 0.6502\,$\pm$\,0.0022 & 50 & B (cols √d) & +0.0348$^\dagger$ \\
+HIGGS & 10000 & 0.6358 & 0.6598\,$\pm$\,0.0046 & 50 & B (cols √d) & +0.0241$^\dagger$ \\
+HIGGS & 50000 & 0.6714 & 0.6872\,$\pm$\,0.0044 & 50 & B (cols √d) & +0.0158$^\dagger$ \\
+HIGGS & 100000 & 0.6722 & 0.6969\,$\pm$\,0.0053 & 50 & B (cols √d) & +0.0247$^\dagger$ \\
+HIGGS & 200000 & 0.6757 & 0.6767\,$\pm$\,0.0052 & 10 & C (split data) & +0.0010 \\
+MNIST & 1000 & 0.8554 & 0.8928\,$\pm$\,0.0046 & 10 & B (cols d/m) & +0.0375$^\dagger$ \\
+MNIST & 5000 & 0.9076 & 0.9430\,$\pm$\,0.0033 & 10 & B (cols d/m) & +0.0353$^\dagger$ \\
+MNIST & 10000 & 0.9235 & 0.9541\,$\pm$\,0.0008 & 10 & B (cols d/m) & +0.0306$^\dagger$ \\
+MNIST & 50000 & 0.9518 & 0.9709\,$\pm$\,0.0010 & 10 & B (cols d/m) & +0.0191$^\dagger$ \\
+Optdigits & 500 & 0.9546 & 0.9561\,$\pm$\,0.0075 & 50 & B (cols √d) & +0.0015 \\
+Optdigits & 1000 & 0.9677 & 0.9674\,$\pm$\,0.0031 & 50 & B (cols √d) & -0.0003 \\
+Optdigits & 2000 & 0.9813 & 0.9786\,$\pm$\,0.0032 & 50 & B (cols √d) & -0.0027 \\
+Optdigits & 3823 & 0.9861 & 0.9870\,$\pm$\,0.0013 & 50 & B (cols √d) & +0.0009 \\
+Satimage & 500 & 0.8548 & 0.8665\,$\pm$\,0.0071 & 50 & B (cols √d) & +0.0117$^\dagger$ \\
+Satimage & 1000 & 0.8769 & 0.8886\,$\pm$\,0.0045 & 50 & B (cols √d) & +0.0117$^\dagger$ \\
+Satimage & 2000 & 0.8870 & 0.8992\,$\pm$\,0.0097 & 50 & B (cols √d) & +0.0122$^\dagger$ \\
+Satimage & 4435 & 0.9038 & 0.9183\,$\pm$\,0.0028 & 50 & B (cols √d) & +0.0145$^\dagger$ \\
+\bottomrule
+\end{tabular}
+\caption{Best $m>1$ feeding arm vs.\ the $m=1$ baseline (mean\,$\pm$\,std). $^\dagger$: gain exceeds seed std.}
+\label{tab:mgain}
+\end{table}
