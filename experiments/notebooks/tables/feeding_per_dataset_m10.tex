@@ -4,11 +4,11 @@
 \toprule
 Arm & $n{=}1000$ & $n{=}5000$ & $n{=}10000$ & $n{=}50000$ & $n{=}100000$ & $n{=}200000$ \\
 \midrule
-B (cols d/m) & \textbf{0.5947\,$\pm$\,0.0029} & 0.6253\,$\pm$\,0.0046 & 0.6376\,$\pm$\,0.0058 & 0.6544\,$\pm$\,0.0027 & 0.6551\,$\pm$\,0.0033 & 0.6535\,$\pm$\,0.0033 \\
-B (cols √d) & 0.5805\,$\pm$\,0.0128 & 0.6110\,$\pm$\,0.0133 & 0.6254\,$\pm$\,0.0205 & 0.6483\,$\pm$\,0.0127 & 0.6543\,$\pm$\,0.0089 & 0.6570\,$\pm$\,0.0109 \\
-C (split data) &  & \textbf{0.6387\,$\pm$\,0.0020} & \textbf{0.6445\,$\pm$\,0.0059} & \textbf{0.6703\,$\pm$\,0.0022} & \textbf{0.6726\,$\pm$\,0.0064} & \textbf{0.6767\,$\pm$\,0.0052} \\
-D (both d/m) &  & 0.6052\,$\pm$\,0.0205 & 0.6244\,$\pm$\,0.0087 & 0.6427\,$\pm$\,0.0035 & 0.6455\,$\pm$\,0.0029 & 0.6484\,$\pm$\,0.0042 \\
-D (both √d) &  & 0.5841\,$\pm$\,0.0106 & 0.6049\,$\pm$\,0.0141 & 0.6268\,$\pm$\,0.0080 & 0.6387\,$\pm$\,0.0104 & 0.6461\,$\pm$\,0.0105 \\
+Feature Partitioning & \textbf{0.5947\,$\pm$\,0.0029} & 0.6253\,$\pm$\,0.0046 & 0.6376\,$\pm$\,0.0058 & 0.6544\,$\pm$\,0.0027 & 0.6551\,$\pm$\,0.0033 & 0.6535\,$\pm$\,0.0033 \\
+Feature Subsampling & 0.5805\,$\pm$\,0.0128 & 0.6110\,$\pm$\,0.0133 & 0.6254\,$\pm$\,0.0205 & 0.6483\,$\pm$\,0.0127 & 0.6543\,$\pm$\,0.0089 & 0.6570\,$\pm$\,0.0109 \\
+Instance Partitioning &  & \textbf{0.6387\,$\pm$\,0.0020} & \textbf{0.6445\,$\pm$\,0.0059} & \textbf{0.6703\,$\pm$\,0.0022} & \textbf{0.6726\,$\pm$\,0.0064} & \textbf{0.6767\,$\pm$\,0.0052} \\
+Joint Partitioning (d/m) &  & 0.6052\,$\pm$\,0.0205 & 0.6244\,$\pm$\,0.0087 & 0.6427\,$\pm$\,0.0035 & 0.6455\,$\pm$\,0.0029 & 0.6484\,$\pm$\,0.0042 \\
+Joint Partitioning (√d) &  & 0.5841\,$\pm$\,0.0106 & 0.6049\,$\pm$\,0.0141 & 0.6268\,$\pm$\,0.0080 & 0.6387\,$\pm$\,0.0104 & 0.6461\,$\pm$\,0.0105 \\
 \bottomrule
 \end{tabular}
 \caption{Feeding strategies on HIGGS at $m=10$ (mean\,$\pm$\,std; best per column bold).}
@@ -21,11 +21,11 @@ D (both √d) &  & 0.5841\,$\pm$\,0.0106 & 0.6049\,$\pm$\,0.0141 & 0.6268\,$\pm$
 \toprule
 Arm & $n{=}1000$ & $n{=}5000$ & $n{=}10000$ & $n{=}50000$ \\
 \midrule
-B (cols d/m) & \textbf{0.6720\,$\pm$\,0.0056} & 0.7286\,$\pm$\,0.0026 & 0.7570\,$\pm$\,0.0042 &  \\
-B (cols √d) & 0.6347\,$\pm$\,0.0363 & 0.6975\,$\pm$\,0.0236 & 0.7256\,$\pm$\,0.0206 & 0.7513\,$\pm$\,0.0158 \\
-C (split data) &  & \textbf{0.7365\,$\pm$\,0.0038} & \textbf{0.7610\,$\pm$\,0.0044} & \textbf{0.7946\,$\pm$\,0.0030} \\
-D (both d/m) &  & 0.7178\,$\pm$\,0.0033 & 0.7302\,$\pm$\,0.0038 &  \\
-D (both √d) &  & 0.6822\,$\pm$\,0.0331 & 0.7010\,$\pm$\,0.0320 &  \\
+Feature Partitioning & \textbf{0.6720\,$\pm$\,0.0056} & 0.7286\,$\pm$\,0.0026 & 0.7570\,$\pm$\,0.0042 &  \\
+Feature Subsampling & 0.6347\,$\pm$\,0.0363 & 0.6975\,$\pm$\,0.0236 & 0.7256\,$\pm$\,0.0206 & 0.7513\,$\pm$\,0.0158 \\
+Instance Partitioning &  & \textbf{0.7365\,$\pm$\,0.0038} & \textbf{0.7610\,$\pm$\,0.0044} & \textbf{0.7946\,$\pm$\,0.0030} \\
+Joint Partitioning (d/m) &  & 0.7178\,$\pm$\,0.0033 & 0.7302\,$\pm$\,0.0038 &  \\
+Joint Partitioning (√d) &  & 0.6822\,$\pm$\,0.0331 & 0.7010\,$\pm$\,0.0320 &  \\
 \bottomrule
 \end{tabular}
 \caption{Feeding strategies on CoverType at $m=10$ (mean\,$\pm$\,std; best per column bold).}
@@ -36,30 +36,13 @@ D (both √d) &  & 0.6822\,$\pm$\,0.0331 & 0.7010\,$\pm$\,0.0320 &  \\
 \centering\small
 \begin{tabular}{lcccc}
 \toprule
-Arm & $n{=}1000$ & $n{=}5000$ & $n{=}10000$ & $n{=}50000$ \\
-\midrule
-B (cols d/m) & \textbf{0.8928\,$\pm$\,0.0046} & \textbf{0.9430\,$\pm$\,0.0033} & \textbf{0.9541\,$\pm$\,0.0008} & \textbf{0.9709\,$\pm$\,0.0010} \\
-B (cols √d) & 0.8276\,$\pm$\,0.0220 & 0.8979\,$\pm$\,0.0050 & 0.9165\,$\pm$\,0.0051 & 0.9388\,$\pm$\,0.0039 \\
-C (split data) &  & 0.9134\,$\pm$\,0.0019 & 0.9282\,$\pm$\,0.0038 & 0.9490\,$\pm$\,0.0006 \\
-D (both d/m) &  & 0.9086\,$\pm$\,0.0013 & 0.9316\,$\pm$\,0.0023 &  \\
-D (both √d) &  & 0.8800\,$\pm$\,0.0062 & 0.8999\,$\pm$\,0.0046 &  \\
-\bottomrule
-\end{tabular}
-\caption{Feeding strategies on MNIST at $m=10$ (mean\,$\pm$\,std; best per column bold).}
-\label{tab:feed_mnist}
-\end{table}
-
-\begin{table}[ht]
-\centering\small
-\begin{tabular}{lcccc}
-\toprule
 Arm & $n{=}500$ & $n{=}1000$ & $n{=}2000$ & $n{=}3823$ \\
 \midrule
-B (cols d/m) & \textbf{0.9345\,$\pm$\,0.0091} & \textbf{0.9496\,$\pm$\,0.0072} & 0.9647\,$\pm$\,0.0032 & 0.9739\,$\pm$\,0.0037 \\
-B (cols √d) & 0.9075\,$\pm$\,0.0126 & 0.9267\,$\pm$\,0.0098 & 0.9439\,$\pm$\,0.0161 & 0.9549\,$\pm$\,0.0054 \\
-C (split data) &  &  & \textbf{0.9757\,$\pm$\,0.0054} & \textbf{0.9816\,$\pm$\,0.0029} \\
-D (both d/m) &  &  & 0.9615\,$\pm$\,0.0018 & 0.9659\,$\pm$\,0.0014 \\
-D (both √d) &  &  & 0.9380\,$\pm$\,0.0049 & 0.9605\,$\pm$\,0.0052 \\
+Feature Partitioning & \textbf{0.9345\,$\pm$\,0.0091} & \textbf{0.9496\,$\pm$\,0.0072} & 0.9647\,$\pm$\,0.0032 & 0.9739\,$\pm$\,0.0037 \\
+Feature Subsampling & 0.9075\,$\pm$\,0.0126 & 0.9267\,$\pm$\,0.0098 & 0.9439\,$\pm$\,0.0161 & 0.9549\,$\pm$\,0.0054 \\
+Instance Partitioning &  &  & \textbf{0.9757\,$\pm$\,0.0054} & \textbf{0.9816\,$\pm$\,0.0029} \\
+Joint Partitioning (d/m) &  &  & 0.9615\,$\pm$\,0.0018 & 0.9659\,$\pm$\,0.0014 \\
+Joint Partitioning (√d) &  &  & 0.9380\,$\pm$\,0.0049 & 0.9605\,$\pm$\,0.0052 \\
 \bottomrule
 \end{tabular}
 \caption{Feeding strategies on Optdigits at $m=10$ (mean\,$\pm$\,std; best per column bold).}
@@ -70,29 +53,49 @@ D (both √d) &  &  & 0.9380\,$\pm$\,0.0049 & 0.9605\,$\pm$\,0.0052 \\
 \centering\small
 \begin{tabular}{lcccc}
 \toprule
-Arm & $n{=}500$ & $n{=}1000$ & $n{=}2000$ & $n{=}4435$ \\
+Arm & $n{=}1000$ & $n{=}5000$ & $n{=}10000$ & $n{=}50000$ \\
 \midrule
-B (cols d/m) & \textbf{0.8593\,$\pm$\,0.0094} & 0.8795\,$\pm$\,0.0059 & 0.8815\,$\pm$\,0.0114 & 0.8969\,$\pm$\,0.0035 \\
-B (cols √d) & 0.8541\,$\pm$\,0.0139 & \textbf{0.8818\,$\pm$\,0.0102} & \textbf{0.8922\,$\pm$\,0.0187} & \textbf{0.9069\,$\pm$\,0.0098} \\
-C (split data) &  &  & 0.8893\,$\pm$\,0.0106 & 0.9025\,$\pm$\,0.0044 \\
-D (both d/m) &  &  & 0.8888\,$\pm$\,0.0114 & 0.8930\,$\pm$\,0.0031 \\
-D (both √d) &  &  & 0.8852\,$\pm$\,0.0101 & 0.8979\,$\pm$\,0.0012 \\
+Feature Partitioning & \textbf{0.8928\,$\pm$\,0.0046} & \textbf{0.9430\,$\pm$\,0.0033} & \textbf{0.9541\,$\pm$\,0.0008} & \textbf{0.9709\,$\pm$\,0.0010} \\
+Feature Subsampling & 0.8276\,$\pm$\,0.0220 & 0.8979\,$\pm$\,0.0050 & 0.9165\,$\pm$\,0.0051 & 0.9388\,$\pm$\,0.0039 \\
+Instance Partitioning &  & 0.9134\,$\pm$\,0.0019 & 0.9282\,$\pm$\,0.0038 & 0.9490\,$\pm$\,0.0006 \\
+Joint Partitioning (d/m) &  & 0.9086\,$\pm$\,0.0013 & 0.9316\,$\pm$\,0.0023 &  \\
+Joint Partitioning (√d) &  & 0.8800\,$\pm$\,0.0062 & 0.8999\,$\pm$\,0.0046 &  \\
 \bottomrule
 \end{tabular}
-\caption{Feeding strategies on Satimage at $m=10$ (mean\,$\pm$\,std; best per column bold).}
-\label{tab:feed_satimage}
+\caption{Feeding strategies on MNIST at $m=10$ (mean\,$\pm$\,std; best per column bold).}
+\label{tab:feed_mnist}
 \end{table}
 
 \begin{table}[ht]
 \centering\small
 \begin{tabular}{lccc}
 \toprule
-Arm & $n{=}500$ & $n{=}1000$ & $n{=}1297$ \\
+Arm & $n{=}2000$ & $n{=}10000$ & $n{=}50000$ \\
 \midrule
-B (cols d/m) & \textbf{0.9567\,$\pm$\,0.0083} & \textbf{0.9620\,$\pm$\,0.0072} & \textbf{0.9593\,$\pm$\,0.0153} \\
-B (cols √d) & 0.9287\,$\pm$\,0.0162 & 0.9447\,$\pm$\,0.0064 & 0.9453\,$\pm$\,0.0153 \\
+Feature Partitioning & \textbf{0.8340\,$\pm$\,0.0041} & \textbf{0.8696\,$\pm$\,0.0023} & \textbf{0.8915\,$\pm$\,0.0010} \\
+Feature Subsampling & 0.8075\,$\pm$\,0.0043 & 0.8506\,$\pm$\,0.0023 & 0.8716\,$\pm$\,0.0007 \\
+Instance Partitioning & 0.8112\,$\pm$\,0.0010 & 0.8554\,$\pm$\,0.0022 & 0.8758\,$\pm$\,0.0023 \\
+Joint Partitioning (d/m) & 0.7909\,$\pm$\,0.0037 & 0.8535\,$\pm$\,0.0034 & 0.8763\,$\pm$\,0.0002 \\
+Joint Partitioning (√d) & 0.7748\,$\pm$\,0.0034 & 0.8394\,$\pm$\,0.0026 & 0.8581\,$\pm$\,0.0029 \\
 \bottomrule
 \end{tabular}
-\caption{Feeding strategies on Digits8x8 at $m=10$ (mean\,$\pm$\,std; best per column bold).}
-\label{tab:feed_digits8x8}
+\caption{Feeding strategies on FashionMNIST at $m=10$ (mean\,$\pm$\,std; best per column bold).}
+\label{tab:feed_fashionmnist}
+\end{table}
+
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lcc}
+\toprule
+Arm & $n{=}2000$ & $n{=}5600$ \\
+\midrule
+Feature Partitioning & \textbf{0.9669\,$\pm$\,0.0047} & \textbf{0.9709\,$\pm$\,0.0008} \\
+Feature Subsampling & 0.9364\,$\pm$\,0.0131 & 0.9460\,$\pm$\,0.0104 \\
+Instance Partitioning & 0.9210\,$\pm$\,0.0030 & 0.9298\,$\pm$\,0.0037 \\
+Joint Partitioning (d/m) & 0.9376\,$\pm$\,0.0039 & 0.9507\,$\pm$\,0.0007 \\
+Joint Partitioning (√d) & 0.9024\,$\pm$\,0.0090 & 0.9190\,$\pm$\,0.0086 \\
+\bottomrule
+\end{tabular}
+\caption{Feeding strategies on Gisette at $m=10$ (mean\,$\pm$\,std; best per column bold).}
+\label{tab:feed_gisette}
 \end{table}

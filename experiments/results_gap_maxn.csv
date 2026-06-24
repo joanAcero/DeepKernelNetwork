@@ -1,0 +1,2 @@
+dataset,d,pool,phase,n,seed,mlp_acc,mlp_time,rbf_exact_acc,rbf_rff_acc,rbf_rff_time,gap_pts,timestamp
+chess_krk,23,28056,maxn,23056,0,0.833,,,0.595,262.01,23.8,2026-06-22T20:52:41.558627

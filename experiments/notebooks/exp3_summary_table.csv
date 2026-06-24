@@ -1,0 +1,8 @@
+dataset,panel,n,metric,flat,rbf,rbf_kind,best,best_m,best_L,depth_gain,gap
+checkerboard,gap,80000,test_acc,0.7659,0.7359,rff,0.9611,70,5,0.1299,-0.03
+chess_krk,gap,14444,test_acc,0.5336,0.5974,exact,0.5843,70,4,0.0478,0.0638
+covertype,gap,80000,test_acc,0.7857,0.7226,rff,0.7676,70,2,0.0118,-0.0631
+higgs,control,70440,test_acc,0.6741,0.6619,rff,0.6737,70,1,0.0,-0.0122
+miniboone,control,80000,test_acc,0.918,0.8731,rff,0.9164,20,3,0.0032,-0.0449
+poker,gap,100000,test_f1,0.1908,0.2416,rff,0.2517,20,1,0.0,0.0507
+spirals,gap,80000,test_acc,0.5898,0.7345,rff,0.9996,50,3,0.4066,0.1447

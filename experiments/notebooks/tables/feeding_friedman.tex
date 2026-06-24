@@ -1,0 +1,16 @@
+\begin{table}[ht]
+\centering\small
+\begin{tabular}{lc}
+\toprule
+Feeding strategy & Average rank \\
+\midrule
+Feature Partitioning & 1.62 \\
+Instance Partitioning & 1.81 \\
+Joint Partitioning (d/m) & 3.12 \\
+Feature Subsampling & 3.50 \\
+Joint Partitioning (√d) & 4.94 \\
+\bottomrule
+\end{tabular}
+\caption{Average ranks of the feeding strategies at $m=10$ over the 16 (dataset, $n$) blocks. A Friedman test rejects rank equality ($\chi^2=46.9$, $p<0.001$); the Nemenyi critical difference is $\mathrm{CD}=1.52$, so strategies whose ranks differ by more than 1.52 are significantly different at $\alpha=0.05$.}
+\label{tab:feeding_friedman}
+\end{table}
